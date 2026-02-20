@@ -1,7 +1,10 @@
-<script>
+<script setup lang="ts">
+
+const route = useRoute();
+const id = route.params.id;
 
 </script>
 
 <template>
-  <h1>locality</h1>
+  <locality :id="id" />
 </template>
