@@ -1,8 +1,12 @@
 import type {Locality} from "~/interfaces/locality.interface";
 
-export const fetchLocalities = (offset: number, limit: number) => {
+export const fetchLocalities = (offset: number, limit: number, search?: string) => {
     return $fetch(`https://rwapi.geoloogia.info/api/v1/public/localities/`, {
-        query: { offset, limit }
+        query: {
+            offset,
+            limit,
+            name__icontains: search || undefined,
+        }
     })
 }
 

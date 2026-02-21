@@ -1,10 +1,10 @@
 import {fetchLocalities} from "~/services/localities";
 
-export const useLocalities = (offset: Ref<number>, limit: Ref<number>) => {
+export const useLocalities = (offset: Ref<number>, limit: Ref<number>, search:Ref<string>) => {
     const { data, pending, error } = useAsyncData(
         'localities',
-        () => fetchLocalities(offset.value, limit.value),
-        { watch: [offset, limit] }
+        () => fetchLocalities(offset.value, limit.value, search.value),
+        { watch: [offset, limit, search] }
     );
 
     return {

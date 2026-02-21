@@ -1,4 +1,4 @@
-export const usePagination = (defaultLimit: number = 10) => {
+export const usePagination = (defaultLimit: number = 10, search: Ref<string>) => {
     const route = useRoute();
 
     const parseNumber = (value: unknown, fallback: number) => {
@@ -12,26 +12,49 @@ export const usePagination = (defaultLimit: number = 10) => {
     const offset = computed(() => (page.value - 1) * limit.value);
 
 
-    watch(page, async () => {
+    watch([page], async () => {
+        const query = {
+            page: page.value,
+            limit: limit.value,
+        }
+        if (search.value !== ""){
+            query.search = search.value;
+        }
         await navigateTo({
             path: "/",
-            query: {
-                page: page.value,
-                limit: limit.value,
-            }
+            query
         })
     })
 
     watch(limit, async () => {
         page.value = 1;
+        const query = {
+            page: page.value,
+            limit: limit.value,
+        }
+        if (search.value !== ""){
+            query.search = search.value;
+        }
         await navigateTo({
             path: "/",
-            query: {
-                page: page.value,
-                limit: limit.value,
-            }
+            query
         })
     })
 
-    return { page, limit, offset }
+    watch(search, async () => {
+        page.value = 1;
+        const query = {
+            page: page.value,
+            limit: limit.value,
+        }
+        if (search.value !== ""){
+            query.search = search.value;
+        }
+        await navigateTo({
+            path: "/",
+            query
+        })
+    })
+
+    return {page, limit, offset}
 }
