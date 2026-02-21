@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import {useLocality} from "~/composable/useLocalities";
 
+
+import {fetchLocality} from "~/services/localities";
 
 const props = defineProps<{
   id: number | string;
 }>();
 
-const locality = await useLocality(props.id);
+const locality = await fetchLocality(props.id);
 
 
 </script>

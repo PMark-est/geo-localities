@@ -1,12 +1,16 @@
-import {useFetch} from "nuxt/app";
-import type {Locality} from "~/interfaces/locality.interface";
+import {fetchLocalities} from "~/services/localities";
 
-export const useLocalities = async () => {
-    const {data: localities} = await useFetch("https://rwapi.geoloogia.info/api/v1/public/localities");
-    return localities.value;
-}
+export const useLocalities = (offset: Ref<number>, limit: Ref<number>) => {
+    const { data, pending, error } = useAsyncData(
+        'localities',
+        () => fetchLocalities(offset.value, limit.value),
+        { watch: [offset, limit] }
+    );
 
-export const useLocality = async (id: number | string) => {
-    const {data: localities} = await useFetch(`https://rwapi.geoloogia.info/api/v1/public/localities/${id}`);
-    return localities.value as Locality;
-}
+    return {
+        items: computed(() => data.value?.results ?? []),
+        total: computed(() => data.value?.count ?? 0),
+        pending,
+        error
+    };
+};
