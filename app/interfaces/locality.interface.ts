@@ -1,33 +1,37 @@
-export interface Locality {
-    id: number;
-    area: number | null;
-    code: string | null;
-    coordx: number;
-    coordy: number;
-    country: number;
-    coordinate_system: string | null;
-    depth: number;
-    elevation: string; // Note: The JSON provides this as a string "21.50"
-    epsg: number | null;
-    latitude: number;
-    land_board_id: string;
-    longitude: number;
-    name: string;
-    name_en: string;
-    number: string;
-    municipality: number;
-    remarks: string;
-    remarks_location: string;
-    stratigraphy_base_text: string | null;
-    stratigraphy_top_text: string;
-    coordinate_agent: number;
-    coordinate_method: number | null;
-    coordinate_precision: number | null;
-    parent: number | null;
-    type: number;
-    settlement: number;
-    stratigraphy_base: number;
-    stratigraphy_top: number;
-    date_added: string | null; // Usually ISO string or Date
-    date_changed: string;       // ISO string e.g., "2022-11-21T21:13:22Z"
-}
+import { z } from 'zod';
+
+export const LocalitySchema = z.object({
+    id: z.number(),
+    area: z.number().nullable(),
+    code: z.string().nullable(),
+    coordx: z.number().nullable(),
+    coordy: z.number().nullable(),
+    country: z.number().nullable(),
+    coordinate_system: z.string().nullable(),
+    depth: z.number().nullable(),
+    elevation: z.string().nullable(),
+    epsg: z.number().nullable(),
+    latitude: z.number().nullable(),
+    land_board_id: z.string().nullable(),
+    longitude: z.number().nullable(),
+    name: z.string().nullable(),
+    name_en: z.string().nullable(),
+    number: z.string().nullable(),
+    municipality: z.number().nullable(),
+    remarks: z.string().nullable(),
+    remarks_location: z.string().nullable(),
+    stratigraphy_base_text: z.string().nullable(),
+    stratigraphy_top_text: z.string().nullable(),
+    coordinate_agent: z.number().nullable(),
+    coordinate_method: z.number().nullable(),
+    coordinate_precision: z.number().nullable(),
+    parent: z.number().nullable(),
+    type: z.number().nullable(),
+    settlement: z.number().nullable(),
+    stratigraphy_base: z.number().nullable(),
+    stratigraphy_top: z.number().nullable(),
+    date_added: z.string().nullable(),
+    date_changed: z.string().nullable(),
+});
+
+export type Locality = z.infer<typeof LocalitySchema>;
