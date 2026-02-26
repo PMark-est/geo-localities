@@ -10,6 +10,8 @@ watch(() => route.fullPath, (path) => { lastListUrl.value = path }, { immediate:
 const {searchInput, debouncedSearch} = useSearch();
 const { page, limit, offset } = usePagination(10, searchInput);
 const { items, total, pending } = useLocalities(offset, limit, debouncedSearch);
+const { width } = useWindowSize();
+const paginationSize = computed(() => width.value < 640 ? 'xs' : 'md');
 
 const limits = ref([10, 20, 50, 100]);
 </script>
@@ -138,13 +140,13 @@ const limits = ref([10, 20, 50, 100]);
       </div>
 
       <!-- Pagination -->
-      <div class="mt-5 flex items-center justify-between">
-        <p class="text-xs text-slate-500 font-mono">
-          Lehekülg {{ page }} / {{ Math.ceil((total ?? 0) / limit) || 1 }}
-        </p>
+      <div class="mt-5 flex justify-center">
         <UPagination
             v-model:page="page"
             :total="total"
+            :sibling-count="1"
+            :size="paginationSize"
+            show-edges
             class="[&_button]:bg-white/5 [&_button]:border-white/10 [&_button]:text-slate-400 [&_button:hover]:bg-amber-400/10 [&_button:hover]:border-amber-400/30 [&_button:hover]:text-amber-400 [&_button[aria-current]]:bg-amber-400 [&_button[aria-current]]:text-[#0e1117] [&_button[aria-current]]:font-bold rounded-xl"
         />
       </div>
