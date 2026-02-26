@@ -80,6 +80,7 @@ const limits = ref([10, 20, 50, 100]);
           <USelectMenu
               v-model="limit"
               :items="limits"
+              :search-input="false"
               variant="ghost"
               class="text-slate-200 font-mono text-sm min-w-[3rem]"
           />
