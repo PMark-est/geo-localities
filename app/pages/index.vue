@@ -145,6 +145,7 @@ const limits = ref([10, 20, 50, 100]);
         <UPagination
             v-model:page="page"
             :total="total"
+            :items-per-page="limit"
             :sibling-count="1"
             :size="paginationSize"
             show-edges
