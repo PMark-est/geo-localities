@@ -6,5 +6,5 @@ const id = route.params.id;
 </script>
 
 <template>
-  <locality :id="id" />
+  <Locality :id="id" />
 </template>
